@@ -20,6 +20,7 @@ import cta from "./objects/cta";
 import accordion from "./objects/accordion";
 import slide from "./objects/slide";
 import socialLink from "./objects/socialLink";
+import linkGroup from "./objects/linkGroup";
 
 // -------------- Blocks --------------- //
 import section from "./blocks/section";
@@ -55,6 +56,7 @@ export default [
   accordion,
   slide,
   socialLink,
+  linkGroup,
 
   // blocks 🧱
   section,

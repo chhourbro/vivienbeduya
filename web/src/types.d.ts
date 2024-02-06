@@ -17,7 +17,12 @@ declare global {
     _updatedAt?: Maybe<Scalars["Date"]>;
     _rev?: Maybe<Scalars["String"]>;
     _ref?: Maybe<Scalars["String"]>;
+    slug?: Maybe<Slug>;
   }
 
   type Page = Sanity.Production.Schema.Page & SanityDocument;
+
+  type Header = Sanity.Production.Schema.Header & SanityDocument;
+
+  type Doc = "page" | "header" | "footer" | "blog";
 }

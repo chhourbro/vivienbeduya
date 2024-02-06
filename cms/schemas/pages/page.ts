@@ -17,8 +17,6 @@ const Page = defineType({
       name: "sections",
       type: "array",
       of: sections,
-      // description:
-      //   "NOTE: If the preview is taking a long time to show your updates - try clicking the 🔄 button, or refresh the page",
     }),
   ],
   preview: {

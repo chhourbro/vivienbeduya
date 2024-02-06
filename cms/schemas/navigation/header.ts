@@ -8,13 +8,17 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
+      name: "title",
+      type: "string",
+    }),
+    defineField({
       name: "logo",
       type: "imageWithMeta",
     }),
     defineField({
       name: "links",
       type: "array",
-      of: [{ type: "link" }],
+      of: [{ type: "link" }, { type: "linkGroup" }],
     }),
   ],
 });

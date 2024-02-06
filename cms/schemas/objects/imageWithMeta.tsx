@@ -46,6 +46,7 @@ export default defineType({
           { title: "Scale down", value: "scale-down" },
         ],
       },
+      hidden: true,
     }),
   ],
 });

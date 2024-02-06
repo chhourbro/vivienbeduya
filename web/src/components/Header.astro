@@ -1,0 +1,76 @@
+---
+import { getHeader } from "../utils/sanity";
+import Image from "./pebbles/image";
+import Link from "./pebbles/link";
+
+const data = await getHeader();
+
+console.log(data);
+---
+
+<header class="header">
+  <a class="header__title" href="/">
+    {data.logo && <Image data={data.logo as any} wrapperClassName="logo" />}
+    {data.title}
+  </a>
+  <nav class="links">
+    {data.links?.map(link => <Link data={link} />)}
+  </nav>
+
+  <style>
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 var(--space-1);
+      border-bottom: 1px solid #ced2d9;
+
+      z-index: 10;
+      background: var(--white);
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+
+      & .header__title {
+        font-weight: 800;
+        font-size: var(--font-size-3);
+        line-height: var(--line-height-1);
+        padding-left: var(--space-2);
+        margin: var(--space-3) 0;
+        text-decoration: none;
+        color: var(--black);
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+      }
+    }
+
+    .links {
+      display: flex;
+      column-gap: var(--space-3);
+      margin: var(--space-3) 0;
+    }
+
+    img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    @media (min-width: 600px) {
+      .header {
+        position: unset;
+        border-bottom: none;
+        margin: var(--space-3) 0;
+        padding: var(--space-2) 0;
+        background: unset;
+
+        & .header__title {
+          margin: var(--space-3) 0 var(--space-2);
+          font-size: var(--font-size-5);
+        }
+      }
+    }
+  </style>
+</header>
