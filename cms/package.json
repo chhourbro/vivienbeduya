@@ -1,0 +1,55 @@
+{
+  "name": "@flightdigital/sanity-studio",
+  "private": true,
+  "version": "1.0.0",
+  "main": "package.json",
+  "author": "dave <dave@flightdigital.co.nz>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "test": "sanity check",
+    "graph:deploy:all": "sanity graphql deploy",
+    "graph:deploy:prod": "sanity graphql deploy --api production",
+    "graph:deploy:dev": "sanity graphql deploy --api development",
+    "graph:list": "sanity graphql list",
+    "deploy": "sanity deploy",
+    "codegen": "npx sanity-codegen codegen",
+    "dataset:copy:prod-to-dev": "sanity dataset export production ./production.tar.gz && sanity dataset import ./production.tar.gz development && rm ./production.tar.gz"
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@sanity/code-input": "^3.0.1",
+    "@sanity/dashboard": "^3.0.0",
+    "@sanity/vision": "^3.25.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0",
+    "react-is": "^18.2.0",
+    "sanity": "^3.25.0",
+    "sanity-plugin-icon-picker": "^3.2.2",
+    "sanity-plugin-iframe-pane": "^2.6.0",
+    "sanity-plugin-media": "^2.2.2",
+    "styled-components": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.23.3",
+    "@babel/register": "^7.23.7",
+    "@sanity/eslint-config-studio": "^2.0.1",
+    "@types/styled-components": "^5.1.26",
+    "babel-plugin-transform-import-meta": "^2.2.1",
+    "eslint": "^8.6.0",
+    "prettier": "^2.8.1",
+    "sanity-codegen": "^1.0.0-alpha.45",
+    "typescript": "^4.0.0"
+  },
+  "prettier": {
+    "semi": true,
+    "printWidth": 100,
+    "bracketSpacing": true,
+    "singleQuote": false
+  }
+}
