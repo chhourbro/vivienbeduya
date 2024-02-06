@@ -1,0 +1,25 @@
+---
+// import Card from "../components/Card.astro";
+import Welcome from "@components/Welcome.astro";
+import Layout from "@layouts/Layout.astro";
+import { getPages } from "@utils/sanity";
+const pages = await getPages();
+---
+
+<Layout title="Welcome to Astro.">
+  <section>
+    <Welcome />
+    <div>
+      <h2>Latest Posts</h2>
+      <ul>
+        {
+          pages.map(post => (
+            <li>
+              <a href={`${post.slug?.current}`}>{post.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Layout>
