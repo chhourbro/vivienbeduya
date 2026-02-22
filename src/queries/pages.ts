@@ -3,6 +3,7 @@ import { buildPagePath } from "@/utils/helpers";
 import { defineQuery } from "next-sanity";
 import {
   draftsFilter,
+  imageFields,
   pagePreviewFields,
   richTextFields,
   seoFields,
@@ -15,12 +16,12 @@ import { blocksFields } from "./blocks";
 export const pageFields = defineQuery(`
   ${pagePreviewFields},
   seo { ${seoFields} },
-  _type == "page" => {
-    blocks { ${blocksFields} }
-  },
+  blocks { ${blocksFields} },
   _type == "article" => {
-    content { ${richTextFields} },
-    publishDate
+    ...,
+    publishDate,
+    tags[]->{ name },
+    image { ${imageFields} }
   },
 `);
 

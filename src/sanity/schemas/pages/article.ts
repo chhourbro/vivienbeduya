@@ -16,11 +16,50 @@ export default defineType({
     fieldgroups.articleDetails,
     { ...fieldgroups.content, default: true },
   ],
+  fieldsets: [
+    { name: "titles", title: "Titles" },
+    { name: "excerpts", title: "Excerpts" },
+  ],
   fields: [
-    ...sharedFields.defaultPageFields({
-      // prefixPageId: "a8928378-7726-4d6a-b80c-ce4e8ed2899e", Use to set a fixed prefix page id for the article
-      noBlocks: true,
+    defineField({
+      name: "title",
+      type: "string",
+      group: fieldgroups.pageSettings.name,
+      fieldset: "titles",
+      validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "alternativeTitle",
+      title: "Alternative",
+      type: "string",
+      group: fieldgroups.pageSettings.name,
+      fieldset: "titles",
+    }),
+    defineField({
+      title: "Excerpt",
+      name: "description",
+      type: "text",
+      rows: 3,
+      group: fieldgroups.pageSettings.name,
+      fieldset: "excerpts",
+      validation: (Rule) =>
+        Rule.max(150).warning("The excerpt should be no more than 150 characters"),
+    }),
+    defineField({
+      name: "alternativeDescription",
+      title: "Alternative",
+      type: "text",
+      rows: 3,
+      group: fieldgroups.pageSettings.name,
+      fieldset: "excerpts",
+      validation: (Rule) =>
+        Rule.max(150).warning("The excerpt should be no more than 150 characters"),
+    }),
+    ...sharedFields
+      .defaultPageFields({
+        prefixPageId: "c3d4aa5d-3792-406e-a72a-9e2f9752f29c",
+      })
+      .filter((field) => !["title", "description"].includes(field.name)),
     defineField({
       name: "publishDate",
       type: "date",
@@ -32,10 +71,10 @@ export default defineType({
       group: fieldgroups.articleDetails.name,
     }),
     defineField({
-      name: "content",
-      type: "richText",
-      group: fieldgroups.content.name,
-      validation: (Rule) => Rule.required(),
+      name: "tags",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "tag" }] }],
+      group: fieldgroups.articleDetails.name,
     }),
   ],
   preview: formatPagePreview(null, { publishDate: "publishDate" }, (props) => ({

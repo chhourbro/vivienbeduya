@@ -4,16 +4,16 @@ import SmoothScroll from "@/components/organisms/smoothScroll";
 import { getLayoutRelatedData } from "@/queries/global";
 import { mergeClassNames } from "@flight-digital/flightdeck/helpers";
 import ThemeClasses from "@flight-digital/flightdeck/pebbles/themeClasses";
-import { Roboto, Wittgenstein } from "next/font/google";
+import { Montserrat, Playfair_Display } from "next/font/google";
 import "./style.linaria.global";
 import KlaviyoProvider from "@/components/organisms/klaviyoProvider";
 
 // Replace with your fonts, also update the font-family in the style.linaria.global.tsx file
-export const roboto = Roboto({
+export const montserrat = Montserrat({
   weight: ["400", "600"],
 });
 
-export const wittgenstein = Wittgenstein({
+export const playfair_display = Playfair_Display({
   weight: ["400"],
 });
 
@@ -21,7 +21,7 @@ export default async function Layout({ children }: LayoutProps<"/">) {
   const navigation = await getLayoutRelatedData();
 
   return (
-    <div className={mergeClassNames("global-layout", roboto.className)}>
+    <div className={mergeClassNames("global-layout", montserrat.className)}>
       <ThemeClasses data={navigation?.theme?.classNames as any} />
       <SmoothScroll />
       <Header data={navigation.header} />

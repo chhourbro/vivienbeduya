@@ -72,9 +72,7 @@ const PrimitiveBlock = async ({ data, columnSpaces }: Props) => {
   }
 
   return (
-    <AnimatedBlockWrapper>
-      <Component />
-    </AnimatedBlockWrapper>
+    <Component />
   );
 };
 

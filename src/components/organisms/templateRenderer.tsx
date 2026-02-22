@@ -12,7 +12,7 @@ const TemplateRenderer = ({
 }) => {
   if (validateType.isComponentBlueprint(data))
     return <Blocks data={{ list: data.blocks }} enablePreview={enablePreview} />;
-  if (validateType.isArticle(data)) return <ArticleTemplate data={data} />;
+  if (validateType.isArticle(data)) return <ArticleTemplate data={data} enablePreview={enablePreview} />;
   return <PageTemplate data={data} enablePreview={enablePreview} />;
 };
 

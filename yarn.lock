@@ -1726,10 +1726,10 @@
   resolved "https://registry.yarnpkg.com/@fastify/busboy/-/busboy-3.2.0.tgz#13ed8212f3b9ba697611529d15347f8528058cea"
   integrity sha512-m9FVDXU3GT2ITSe0UaMA5rU3QkfC/UXtCU8y0gSN/GugTqtVldOBWIB5V6V3sbmenVZUIpU6f+mPEO2+m5iTaA==
 
-"@flight-digital/flightdeck@^6.4.0":
-  version "6.4.0"
-  resolved "https://npm.pkg.github.com/download/@flight-digital/flightdeck/6.4.0/4a246bd57ed1f627bca74e5380242d3b3a8ffbc9#4a246bd57ed1f627bca74e5380242d3b3a8ffbc9"
-  integrity sha512-UrsfWioXSrePPAphRlhp0weRGzvpZVERSUZI931n+M1XZbjYqtWNtnkwMISLrPPKi1IAvRHW9EaCELN+OCZMNQ==
+"@flight-digital/flightdeck@^6.4.1":
+  version "6.4.2"
+  resolved "https://npm.pkg.github.com/download/@flight-digital/flightdeck/6.4.2/3f5ef17a6a6dd3d79d31b908e95e4f0051c7f885#3f5ef17a6a6dd3d79d31b908e95e4f0051c7f885"
+  integrity sha512-HPBMP0/PDgXROyt0ntxUQ7kiKklhuy8bn+bsp4yVTRh7TeQllFWov7IBjRUarwPZoK3QW9LsmM0+Uz9xXqfAiA==
   dependencies:
     "@linaria/core" "^6.1.0"
     "@linaria/react" "^6.1.0"
@@ -1747,10 +1747,10 @@
     react-dom "^19"
     sanity-image "^1.0.0"
 
-"@flight-digital/sanity-plugin-flightdeck@6.5.0":
-  version "6.5.0"
-  resolved "https://npm.pkg.github.com/download/@flight-digital/sanity-plugin-flightdeck/6.5.0/d115b467986529478e63d759c31257281f671ed8#d115b467986529478e63d759c31257281f671ed8"
-  integrity sha512-pFsmT7kIfH5X6H/xgjrIgsYsfSGXax/qRWuuVwz7BpZT/nzVFN5o7RTMdqBV22DyQ+XmAH9WruK4eJ96THA4ag==
+"@flight-digital/sanity-plugin-flightdeck@^6.5.1":
+  version "6.5.1"
+  resolved "https://npm.pkg.github.com/download/@flight-digital/sanity-plugin-flightdeck/6.5.1/bd7fa46923123531801d931b0edcb0e4d409b0e4#bd7fa46923123531801d931b0edcb0e4d409b0e4"
+  integrity sha512-ZDOXyoKiRxWDtUJYBeSB9vWg8gwAid0G+aQacw2RNXfkXoJ53O0EcL/V1CR1q0pcQBik0a7QRSEnfALZQwmnfg==
   dependencies:
     "@codemirror/lang-html" "6.4.0"
     "@codemirror/lang-javascript" "6.1.0"

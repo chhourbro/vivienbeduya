@@ -1,6 +1,8 @@
 import { spaceOptions } from "@/sanity/utils/constants";
 import { allPageTypes, blocksTypes, primitiveBlocksTypes } from "@/utils/constants";
 import { flightDeck } from "@flight-digital/sanity-plugin-flightdeck";
+import { RiTranslate } from "react-icons/ri";
+import { defineField } from "sanity";
 
 // Example of how to add a custom decorator to rich text + heading
 // Create a annotation component file in @/sanity/utils/annotations.tsx and import it here
@@ -16,6 +18,26 @@ const defRichTextFields = {
   //     },
   //   ];
   // },
+  overwriteAnnotations(current: any) {
+    return [
+      ...current,
+      {
+        name: "translation",
+        type: "object",
+        icon: RiTranslate,
+        fields: [
+          {
+            name: "text",
+            type: "text",
+          },
+        ],
+      },
+    ];
+  },
+
+  overwriteFields(current: any) {
+    return [...current, defineField({ name: "customField", type: "string" })];
+  },
 };
 
 const formattedAllPageTypes = allPageTypes.map((type) => ({ type }));
@@ -66,6 +88,7 @@ const flightDeckPlugin = flightDeck({
     components: {
       // Use this to enable the component builder variables in these new schemas
       // overwritePrimitiveArrayOfObjectVariableTypes(current) {
+      //   console.log("current", current);
       //   return [...current, ...primitiveBlocksTypes];
       // },
       // overwriteVariableTypes(current) {
@@ -87,10 +110,7 @@ const flightDeckPlugin = flightDeck({
     button: {
       ...defButtonFields,
       // Customize the design options field based on your needs, update the styles in style.linaria.global.tsx
-      designOptions: [
-        { title: "Blue", value: "blue" },
-        { title: "Black", value: "black" },
-      ],
+      designOptions: [{ title: "Yellow", value: "yellow" }],
     },
     ctaCard: {
       // Customize the design options field based on your needs

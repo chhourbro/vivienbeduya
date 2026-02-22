@@ -110,9 +110,9 @@ type Article = Document & {
   readonly _type: Maybe<Scalars['String']['output']>;
   /** Date the document was last modified */
   readonly _updatedAt: Maybe<Scalars['DateTime']['output']>;
+  readonly alternativeDescription: Maybe<Scalars['String']['output']>;
+  readonly alternativeTitle: Maybe<Scalars['String']['output']>;
   readonly blocks: Maybe<Blocks>;
-  readonly content: Maybe<RichText>;
-  /** A small description displayed below the title */
   readonly description: Maybe<Scalars['String']['output']>;
   readonly image: Maybe<AdaptiveImage>;
   /** Optional, for CMS use only */
@@ -120,6 +120,7 @@ type Article = Document & {
   readonly publishDate: Maybe<Scalars['Date']['output']>;
   readonly seo: Maybe<Seo>;
   readonly slug: Maybe<SlugWithPrefix>;
+  readonly tags: Maybe<ReadonlyArray<Maybe<Tag>>>;
   readonly title: Maybe<Scalars['String']['output']>;
 };
 
@@ -132,8 +133,9 @@ type ArticleFilter = {
   readonly _rev: InputMaybe<StringFilter>;
   readonly _type: InputMaybe<StringFilter>;
   readonly _updatedAt: InputMaybe<DatetimeFilter>;
+  readonly alternativeDescription: InputMaybe<StringFilter>;
+  readonly alternativeTitle: InputMaybe<StringFilter>;
   readonly blocks: InputMaybe<BlocksFilter>;
-  readonly content: InputMaybe<RichTextFilter>;
   readonly description: InputMaybe<StringFilter>;
   readonly image: InputMaybe<AdaptiveImageFilter>;
   readonly label: InputMaybe<StringFilter>;
@@ -152,8 +154,9 @@ type ArticleSorting = {
   readonly _rev: InputMaybe<SortOrder>;
   readonly _type: InputMaybe<SortOrder>;
   readonly _updatedAt: InputMaybe<SortOrder>;
+  readonly alternativeDescription: InputMaybe<SortOrder>;
+  readonly alternativeTitle: InputMaybe<SortOrder>;
   readonly blocks: InputMaybe<BlocksSorting>;
-  readonly content: InputMaybe<RichTextSorting>;
   readonly description: InputMaybe<SortOrder>;
   readonly image: InputMaybe<AdaptiveImageSorting>;
   readonly label: InputMaybe<SortOrder>;
@@ -1469,7 +1472,6 @@ type Page = Document & {
   /** Date the document was last modified */
   readonly _updatedAt: Maybe<Scalars['DateTime']['output']>;
   readonly blocks: Maybe<Blocks>;
-  /** A small description displayed below the title */
   readonly description: Maybe<Scalars['String']['output']>;
   readonly image: Maybe<AdaptiveImage>;
   /** Optional, for CMS use only */
@@ -1663,6 +1665,7 @@ type RichText = {
   readonly _type: Maybe<Scalars['String']['output']>;
   readonly align: Maybe<Scalars['String']['output']>;
   readonly blocksRaw: Maybe<Scalars['JSON']['output']>;
+  readonly customField: Maybe<Scalars['String']['output']>;
   readonly maxWidth: Maybe<CssUnit>;
 };
 
@@ -1670,6 +1673,7 @@ type RichTextFilter = {
   readonly _key: InputMaybe<StringFilter>;
   readonly _type: InputMaybe<StringFilter>;
   readonly align: InputMaybe<StringFilter>;
+  readonly customField: InputMaybe<StringFilter>;
   readonly maxWidth: InputMaybe<CssUnitFilter>;
 };
 
@@ -1677,6 +1681,7 @@ type RichTextSorting = {
   readonly _key: InputMaybe<SortOrder>;
   readonly _type: InputMaybe<SortOrder>;
   readonly align: InputMaybe<SortOrder>;
+  readonly customField: InputMaybe<SortOrder>;
   readonly maxWidth: InputMaybe<CssUnitSorting>;
 };
 
@@ -1693,6 +1698,7 @@ type RootQuery = {
   readonly SanityFileAsset: Maybe<SanityFileAsset>;
   readonly SanityImageAsset: Maybe<SanityImageAsset>;
   readonly Settings: Maybe<Settings>;
+  readonly Tag: Maybe<Tag>;
   readonly Theme: Maybe<Theme>;
   readonly Wiki: Maybe<Wiki>;
   readonly allArticle: ReadonlyArray<Article>;
@@ -1706,6 +1712,7 @@ type RootQuery = {
   readonly allSanityFileAsset: ReadonlyArray<SanityFileAsset>;
   readonly allSanityImageAsset: ReadonlyArray<SanityImageAsset>;
   readonly allSettings: ReadonlyArray<Settings>;
+  readonly allTag: ReadonlyArray<Tag>;
   readonly allTheme: ReadonlyArray<Theme>;
   readonly allWiki: ReadonlyArray<Wiki>;
 };
@@ -1762,6 +1769,11 @@ type RootQuerySanityImageAssetArgs = {
 
 
 type RootQuerySettingsArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+type RootQueryTagArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -1861,6 +1873,14 @@ type RootQueryAllSettingsArgs = {
   offset: InputMaybe<Scalars['Int']['input']>;
   sort: InputMaybe<ReadonlyArray<SettingsSorting>>;
   where: InputMaybe<SettingsFilter>;
+};
+
+
+type RootQueryAllTagArgs = {
+  limit: InputMaybe<Scalars['Int']['input']>;
+  offset: InputMaybe<Scalars['Int']['input']>;
+  sort: InputMaybe<ReadonlyArray<TagSorting>>;
+  where: InputMaybe<TagFilter>;
 };
 
 
@@ -2424,6 +2444,44 @@ type StringFilter = {
   /** Checks if the value is not equal to the given input. */
   readonly neq: InputMaybe<Scalars['String']['input']>;
   readonly nin: InputMaybe<ReadonlyArray<Scalars['String']['input']>>;
+};
+
+type Tag = Document & {
+  readonly __typename?: 'Tag';
+  /** Date the document was created */
+  readonly _createdAt: Maybe<Scalars['DateTime']['output']>;
+  /** Document ID */
+  readonly _id: Maybe<Scalars['ID']['output']>;
+  readonly _key: Maybe<Scalars['String']['output']>;
+  /** Current document revision */
+  readonly _rev: Maybe<Scalars['String']['output']>;
+  /** Document type */
+  readonly _type: Maybe<Scalars['String']['output']>;
+  /** Date the document was last modified */
+  readonly _updatedAt: Maybe<Scalars['DateTime']['output']>;
+  readonly name: Maybe<Scalars['String']['output']>;
+};
+
+type TagFilter = {
+  /** Apply filters on document level */
+  readonly _: InputMaybe<Sanity_DocumentFilter>;
+  readonly _createdAt: InputMaybe<DatetimeFilter>;
+  readonly _id: InputMaybe<IdFilter>;
+  readonly _key: InputMaybe<StringFilter>;
+  readonly _rev: InputMaybe<StringFilter>;
+  readonly _type: InputMaybe<StringFilter>;
+  readonly _updatedAt: InputMaybe<DatetimeFilter>;
+  readonly name: InputMaybe<StringFilter>;
+};
+
+type TagSorting = {
+  readonly _createdAt: InputMaybe<SortOrder>;
+  readonly _id: InputMaybe<SortOrder>;
+  readonly _key: InputMaybe<SortOrder>;
+  readonly _rev: InputMaybe<SortOrder>;
+  readonly _type: InputMaybe<SortOrder>;
+  readonly _updatedAt: InputMaybe<SortOrder>;
+  readonly name: InputMaybe<SortOrder>;
 };
 
 type Theme = Document & {

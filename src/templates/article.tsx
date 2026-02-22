@@ -1,18 +1,32 @@
 import Image from "@/components/atoms/image";
-import RichText from "@/components/molecules/richText";
+import Blocks from "@/components/blocks/blocks";
 import { styled } from "@linaria/react";
+import { format } from "date-fns";
 
 interface Props {
   data: Sanity.Article;
+  enablePreview?: boolean;
 }
 /**
  * THIS IS JUST AN EXAMPLE TEMPLATE, PLEASE DELETE THIS FILE IF YOU DON'T NEED IT OR MODIFY IT ACCORDINGLY
  */
-const ArticleTemplate = ({ data }: Props) => {
+const ArticleTemplate = ({ data, enablePreview }: Props) => {
+
+  const publishDate = data?.publishDate ? format(new Date(data?.publishDate), "dd MMMM yyyy") : null;
   return (
     <Wrapper>
       <div className="article-title-area">
         <h1 className="title">{data?.title}</h1>
+        <div className="article-details">
+          <div className="article-date">
+            Published on: {publishDate}
+          </div>
+          <div className="article-tags">
+            {data?.tags?.map((tag) => (
+              <span key={tag?._key} className="article-tag">{tag?.name}</span>
+            ))}
+          </div>
+        </div>
         {data.image?.desktopImage?.asset ? (
           <div className="image-area">
             <Image data={data?.image} width={1200} loading="eager" />
@@ -20,7 +34,7 @@ const ArticleTemplate = ({ data }: Props) => {
         ) : null}
       </div>
       <div className="article-content-area">
-        <RichText data={data?.content} />
+        <Blocks data={data?.blocks} enablePreview={enablePreview} />
       </div>
     </Wrapper>
   );
@@ -30,7 +44,7 @@ export default ArticleTemplate;
 
 const Wrapper = styled.div`
   .article-title-area {
-    padding: 64rwd 135rwd;
+    padding: 32rwd 128rwd;
     display: flex;
     flex-direction: column;
     gap: 32rwd;
@@ -53,7 +67,6 @@ const Wrapper = styled.div`
 
     .image-area {
       width: 100%;
-      height: 560rwd;
 
       @media --base-down {
         height: 200rwm;
@@ -68,6 +81,10 @@ const Wrapper = styled.div`
   }
 
   .article-content-area {
-    padding: 64rwd var(--theme-page-horizontal-padding);
+    padding: 32rwd 128rwd;
+
+    p {
+      margin: 8rwd 0;
+    }
   }
 `;

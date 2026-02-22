@@ -52,9 +52,9 @@ const Header = ({ data }: Props) => {
             aria-label="toggle side menu"
           >
             {sideMenuOpen ? (
-              <IconClose size={24} color="var(--color-blue)" />
+              <IconClose size={24} color="var(--color-black)" />
             ) : (
-              <IconHamburger size={24} color="var(--color-blue)" />
+              <IconHamburger size={24} color="var(--color-black)" />
             )}
           </button>
         </div>
@@ -95,13 +95,15 @@ const Wrapper = styled.header`
     transition:
       transform 300ms cubic-bezier(0.77, 0.2, 0.5, 1),
       background-color 300ms cubic-bezier(0.77, 0.2, 0.5, 1);
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 16rwd;
+    display: flex; 
+    gap: 32rwd;
     padding: 16rwd var(--theme-page-horizontal-padding);
-    color: var(--color-blue);
+    color: var(--color-black);
     background-color: var(--color-white);
-    border-bottom: 1px solid grey;
+
+    a {
+      font-size: 20rwd;
+    }
 
     @media --base-down {
       padding: 16rwm;
@@ -114,7 +116,6 @@ const Wrapper = styled.header`
 
   .logo-area {
     height: 39rwd;
-    width: 236rwd;
 
     @media --base-down {
       width: 150rwm;

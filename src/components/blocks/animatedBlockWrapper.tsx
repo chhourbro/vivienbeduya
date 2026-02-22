@@ -37,7 +37,6 @@ export const AnimatedBlockWrapper = ({ children }: { children: ReactNode }) => {
 const baseWrapperStyles = `
   animation-delay: var(--delay-ms);
   display: flex;
-  justify-content: center;
   width: 100%;
 `;
 

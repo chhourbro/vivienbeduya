@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "@/components/atoms/image";
 import RichText from "@/components/molecules/richText";
+import { ArticleCard } from "./articleCard";
 import { getArticlesList } from "@/queries/lists";
 import { mergeClassNames } from "@flight-digital/flightdeck/helpers";
 import Button from "@flight-digital/flightdeck/pebbles/button";
@@ -65,13 +65,7 @@ const List = ({ data, initialList }: Props) => {
       {listData?.length ? (
         <div className="articles-list">
           {listData?.map((article) => (
-            // <ArticleCard data={article} key={article?._id} />
-            // THIS IS JUST AN EXAMPLE, please create a article card and use it here
-            <div key={article?._id} className="article-card">
-              <Image data={article?.image} width={500} />
-              <h3>{article?.title}</h3>
-              <p>{article?.description}</p>
-            </div>
+            <ArticleCard key={article?._id} data={article} />
           ))}
         </div>
       ) : (
@@ -113,8 +107,7 @@ const Wrapper = styled.div`
     gap: 24rwd;
     justify-content: space-between;
     border-bottom: 1px solid var(--color-grey);
-    padding-bottom: 48rwd;
-    margin-bottom: 48rwd;
+    padding: 32rwd 0;
 
     @media --base-down {
       gap: 16rwm;
@@ -126,7 +119,7 @@ const Wrapper = styled.div`
 
   .articles-list {
     display: grid;
-    grid-template-columns: repeat(4, minmax(1px, 1fr));
+    grid-template-columns: repeat(3, minmax(1px, 1fr));
     column-gap: 24rwd;
     row-gap: 48rwd;
     transition: opacity 300ms;
@@ -137,18 +130,4 @@ const Wrapper = styled.div`
     }
   }
 
-  .article-card {
-    display: flex;
-    flex-direction: column;
-    gap: 16rwd;
-    border: 1px solid grey;
-    border-radius: 16rwd;
-    padding: 16rwd;
-    .image {
-      border-radius: 8rwd;
-      width: 100%;
-      height: 200rwd;
-      object-fit: cover;
-    }
-  }
 `;

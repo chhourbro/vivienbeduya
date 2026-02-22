@@ -4,7 +4,7 @@ import { RiMenuSearchLine, RiPagesLine, RiSettings3Line } from "react-icons/ri";
 export const fieldgroups = {
   pageSettings: { name: "pageSettings", title: "Page Settings", icon: RiSettings3Line },
   seo: { name: "seo", title: "SEO", icon: RiMenuSearchLine },
-  articleDetails: { name: "articleDetails", title: "Article Details", icon: MdOutlineArticle },
+  articleDetails: { name: "articleDetails", title: "Details", icon: MdOutlineArticle },
   content: { name: "content", title: "Content", icon: RiPagesLine },
 };
 

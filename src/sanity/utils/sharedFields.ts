@@ -18,25 +18,15 @@ const defaultPageFields = (props?: AnyPageProps) => [
     validation: (Rule) => Rule.required(),
   }),
   defineField({
+    title: "Excerpt",
     name: "description",
     type: "text",
-    description: "A small description displayed below the title",
     rows: 3,
     hidden: props?.notListable,
     group: fieldgroups.pageSettings.name,
-  }),
-  defineField({
-    name: "image",
-    title: "Preview image",
-    type: "adaptiveImage",
-    description: "Image displayed when the page is used in a list",
-    hidden: props?.notListable,
-    options: {
-      ...imageWithMetaOptions,
-      disableImageSettings: true,
-      disableMobileImage: true,
-    },
-    group: fieldgroups.pageSettings.name,
+    // limit the length to 150 characters
+    validation: (Rule) =>
+      Rule.max(150).warning("The excerpt should be no more than 150 characters"),
   }),
   defineField({
     name: "slug",
@@ -51,6 +41,19 @@ const defaultPageFields = (props?: AnyPageProps) => [
       : undefined,
     type: "slugWithPrefix",
     validation: (Rule) => Rule.required(),
+    group: fieldgroups.pageSettings.name,
+  }),
+  defineField({
+    name: "image",
+    title: "Preview image",
+    type: "adaptiveImage",
+    description: "Image displayed when the page is used in a list",
+    hidden: props?.notListable,
+    options: {
+      ...imageWithMetaOptions,
+      disableImageSettings: true,
+      disableMobileImage: true,
+    },
     group: fieldgroups.pageSettings.name,
   }),
   defineField({
