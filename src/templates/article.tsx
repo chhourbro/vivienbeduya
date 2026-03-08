@@ -5,6 +5,7 @@ import { getNextReadPost } from "@/queries/global";
 import Link from "@/components/atoms/link";
 import Image from "@/components/atoms/image";
 import { ArticleCard } from "@/components/blocks/articlesList/articleCard";
+import { AltText } from "@/components/atoms/altText";
 
 interface Props {
   data: Sanity.Article;
@@ -16,7 +17,7 @@ export default async function ArticleTemplate({ data, enablePreview }: Props) {
 
   const NextRead = () => (
     <Link data={nextRead} alwaysReturnLink className="next-read">
-      <p className="small">Sunod nga basahonon</p>
+      <AltText text="Next Read" altText="Sunod nga basahonon" />
       <ArticleCard data={nextRead} horizontal />
     </Link>
   )

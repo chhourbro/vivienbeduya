@@ -108,7 +108,6 @@ const Wrapper = styled.footer`
       display: flex;
       flex: 1;
       flex-direction: column;
-      /* mix-blend-mode: difference; */
 
       svg {
         fill: currentColor;
