@@ -9,9 +9,10 @@ import Link from "@/components/atoms/link";
 interface Props {
   data: Sanity.Maybe<Sanity.Article>;
   className?: string;
+  horizontal?: boolean;
 }
 
-export const ArticleCard = ({ data, className }: Props) => {
+export const ArticleCard = ({ data, className, horizontal = false }: Props) => {
   const [hovered, setHovered] = useState(false);
 
   const title = data?.title ?? "";
@@ -23,11 +24,11 @@ export const ArticleCard = ({ data, className }: Props) => {
 
   return (
     <Card
-      className={mergeClassNames("article-card", className)}
+      className={mergeClassNames("article-card", className, horizontal ? "horizontal" : "")}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Image data={data?.image} width={500} />
+      <Image data={data?.image} />
       <ContentBlock>
         <FadeLayer $visible={!hasAlt || !showAlt} $isAlt={false}>
           <h4 className="article-card__title">{title}</h4>
@@ -40,7 +41,7 @@ export const ArticleCard = ({ data, className }: Props) => {
           </FadeLayer>
         )}
       </ContentBlock>
-      <ContentBlock>
+      {!horizontal && <ContentBlock>
         <FadeLayer $visible={!hasAlt || !showAlt} $isAlt={false}>
           <p className="article-card__description">{description}</p>
         </FadeLayer>
@@ -52,10 +53,13 @@ export const ArticleCard = ({ data, className }: Props) => {
           </FadeLayer>
         )}
       </ContentBlock>
+      }
 
-      <Link data={{ slug: data?.slug }} className="violet design">
-        Read more
-      </Link>
+      {!horizontal &&
+        <Link data={{ slug: data?.slug }} className="violet design">
+          Read more
+        </Link>
+      }
     </Card>
   );
 };
@@ -71,6 +75,13 @@ const Card = styled.article`
     border-color ${CARD_TRANSITION},
     box-shadow ${CARD_TRANSITION},
     transform ${CARD_TRANSITION};
+
+  &.horizontal {
+    flex-direction: row;
+    gap: 8rwd;
+    padding: 0;
+    align-items: flex-end;
+  }
 
   &:hover {
     border-color: var(--color-black);

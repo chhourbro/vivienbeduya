@@ -1,19 +1,28 @@
+const ROOT_SLUG_VALUES = ["", "/"];
+
+function isRootSegment(segment: string | undefined | null): boolean {
+  return segment == null || ROOT_SLUG_VALUES.includes(segment);
+}
+
 /**
- * Helper function to build a path like ["parent", "child", "my-page"] from a sanity page document with prefix
- *
- * Handles up to 4 prefixes
+ * Builds a path array like ["parent", "child", "my-page"] from a Sanity page document with prefix.
+ * Used for both generateStaticParams (so the URL includes the prefix) and getPage (to match the request path).
+ * Skips root-like prefix segments (empty or "/") so paths stay consistent with URL segments.
+ * Handles up to 4 prefix levels.
  */
-export function buildPagePath(page: any): string[] {
-  if (!page?.slug?.current || page?.slug?.current === "/") return [];
+export function buildPagePath(page: Sanity.Page | Sanity.Article): string[] {
+  if (!page?.slug?.current || ROOT_SLUG_VALUES.includes(page.slug.current))
+    return [];
 
   const parts: string[] = [page.slug.current];
-  //@ts-ignore
-  let parent: any = page.slug.prefix;
+  let parent: Sanity.Maybe<Sanity.Page | Sanity.Article | undefined> =
+    page.slug.prefix;
   let depth = 0;
 
   while (parent && depth < 4) {
-    parts.unshift(parent.slug?.current || "");
-    parent = parent.slug?.prefix;
+    const segment = parent.slug?.current;
+    if (segment != null && !isRootSegment(segment)) parts.unshift(segment);
+    parent = parent?.slug?.prefix;
     depth++;
   }
 

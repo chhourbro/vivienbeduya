@@ -18,7 +18,7 @@ export const slugWithPrefixFields = defineQuery(`
               current,
               prefix -> {
                 slug {
-                  current,
+                  current
                 }
               }
             }

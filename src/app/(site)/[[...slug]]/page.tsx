@@ -89,6 +89,8 @@ export default async function Page({ params }: PageProps<"/[[...slug]]">) {
   const data = await getPage(loadedParams?.slug);
   const jsonLd = getJsonLd(data);
 
+  console.log(data);
+
   if (!data) return notFound();
 
   const customPageCode = data?.seo?.customPageCode;

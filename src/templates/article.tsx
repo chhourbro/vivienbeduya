@@ -4,6 +4,7 @@ import { styled } from "@linaria/react";
 import { getNextReadPost } from "@/queries/global";
 import Link from "@/components/atoms/link";
 import Image from "@/components/atoms/image";
+import { ArticleCard } from "@/components/blocks/articlesList/articleCard";
 
 interface Props {
   data: Sanity.Article;
@@ -16,10 +17,7 @@ export default async function ArticleTemplate({ data, enablePreview }: Props) {
   const NextRead = () => (
     <Link data={nextRead} alwaysReturnLink className="next-read">
       <p className="small">Sunod nga basahonon</p>
-      <div className="content">
-        <Image data={nextRead?.image} width={130} />
-        <p className="h6">{nextRead?.title}</p>
-      </div>
+      <ArticleCard data={nextRead} horizontal />
     </Link>
   )
 
@@ -49,6 +47,17 @@ const Wrapper = styled.div`
 
   .next-read-mobile {
     display: none;
+  }
+
+  .next-read-desktop {
+    width: 75%;
+    img {
+      max-width: 150rwd;
+      height: 100rwd;
+    }
+    h4 {
+      font-size: 20rwd;
+    }
   }
 
   @media --base-down {

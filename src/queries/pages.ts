@@ -34,10 +34,15 @@ export const pageBySlugQuery = defineQuery(`
 export const allPagesSlugsQuery = defineQuery(`
   *[${typeIsInAllPagesTypes} && ${draftsFilter}] {
     _updatedAt,
-    slug { ${slugWithPrefixFields}}
+    slug { ${slugWithPrefixFields} }
   }
 `);
 
+/**
+ * Fetches the page (or article) for the given URL path.
+ * @param path - Full path segments from the URL, e.g. ["blog", "my-article"] for /blog/my-article.
+ *               Must match the path built from the document's slug + prefix chain so prefixed pages resolve correctly.
+ */
 export const getPage = async (path: string[] | undefined) => {
   const isHome = !path || path.length === 0;
 
@@ -56,6 +61,7 @@ export const getPage = async (path: string[] | undefined) => {
 
   if (!pages?.length) return null;
 
+  // Match by full path so prefixed pages (e.g. /blog/my-article) are not confused with root pages (e.g. /my-article).
   const pageData = (
     isHome ? pages[0] : pages.find((p) => JSON.stringify(buildPagePath(p)) === JSON.stringify(path))
   ) as AllPagesData;
