@@ -13,9 +13,10 @@ export const globals = css`
       --color-white: #ffffff;
       --color-blue: #0000ff;
       --color-yellow: #f7cb4d;
+      --color-violet: #3d348b;
 
       --font-primary: "Montserrat", Arial, system-ui, "Open Sans", sans-serif;
-      --font-secondary: "Playfair Display", Arial, system-ui, "Open Sans", sans-serif;
+      --font-secondary: "Tilt Warp", Arial, system-ui, "Open Sans", sans-serif;
       --font-weight-regular: 400;
       --font-weight-bold: 600;
 
@@ -282,6 +283,8 @@ export const globals = css`
           height: 40rwd;
           min-height: 40rwd;
           border-radius: 8rwd;
+          color: var(--color-white);
+          font-family: var(--font-primary);
 
           &::before {
             content: "";
@@ -290,7 +293,7 @@ export const globals = css`
             z-index: -1;
             border-radius: inherit;
             pointer-events: none;
-            background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+            background: linear-gradient(90deg, #f2c744, #e8503a, #3d348b);
           }
 
           &::after {
@@ -299,9 +302,9 @@ export const globals = css`
             inset: 0;
             z-index: 0;
             border-radius: inherit;
+            background-color: var(--color-violet);
             pointer-events: none;
             border: 1px solid transparent;
-            background-color: var(--color-white);
             transition: transform 250ms;
           }
 
@@ -314,6 +317,8 @@ export const globals = css`
           &:hover::after,
           &:hover > * {
             transform: translate(-4rwd, -4rwd);
+            font-weight: var(--font-weight-bold);
+            background-color: var(--color-white);
           }
 
           &:active::after,
@@ -341,38 +346,20 @@ export const globals = css`
             justify-content: center;
           }
 
-          &.yellow {
+          &.violet {
             color: var(--color-white);
 
             &::after {
-              background-color: var(--color-yellow);
-              border-color: var(--color-yellow);
+              background-color: var(--color-violet);
+              border-color: var(--color-violet);
             }
 
             &:hover {
-              color: var(--color-yellow);
+              color: var(--color-violet);
 
               &::after {
                 background-color: var(--color-white);
-                border-color: var(--color-yellow);
-              }
-            }
-          }
-
-          &.black {
-            color: var(--color-white);
-
-            &::after {
-              background-color: var(--color-black);
-              border-color: var(--color-black);
-            }
-
-            &:hover {
-              color: var(--color-black);
-
-              &::after {
-                background-color: var(--color-white);
-                border-color: var(--color-black);
+                border-color: var(--color-violet);
               }
             }
           }

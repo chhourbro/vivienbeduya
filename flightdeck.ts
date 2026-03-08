@@ -110,7 +110,7 @@ const flightDeckPlugin = flightDeck({
     button: {
       ...defButtonFields,
       // Customize the design options field based on your needs, update the styles in style.linaria.global.tsx
-      designOptions: [{ title: "Yellow", value: "yellow" }],
+      designOptions: [{ title: "Violet", value: "violet" }],
     },
     ctaCard: {
       // Customize the design options field based on your needs

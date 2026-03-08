@@ -3,9 +3,8 @@
 import Image from "@/components/atoms/image";
 import { mergeClassNames } from "@flight-digital/flightdeck/helpers";
 import { styled } from "@linaria/react";
-import { useEffect, useRef, useState } from "react";
-
-const TYPEWRITER_MS_PER_CHAR = 10;
+import { useState } from "react";
+import Link from "@/components/atoms/link";
 
 interface Props {
   data: Sanity.Maybe<Sanity.Article>;
@@ -14,9 +13,6 @@ interface Props {
 
 export const ArticleCard = ({ data, className }: Props) => {
   const [hovered, setHovered] = useState(false);
-  const [titleLen, setTitleLen] = useState(0);
-  const [descLen, setDescLen] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const title = data?.title ?? "";
   const description = data?.description ?? "";
@@ -25,41 +21,7 @@ export const ArticleCard = ({ data, className }: Props) => {
   const showAlt = hovered && (altTitle || altDescription);
   const hasAlt = !!(altTitle || altDescription);
 
-  useEffect(() => {
-    if (!showAlt) {
-      setTitleLen(0);
-      setDescLen(0);
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-      return;
-    }
-    intervalRef.current = setInterval(() => {
-      setTitleLen((prev) => (prev >= altTitle.length ? prev : prev + 1));
-      setDescLen((prev) => (prev >= altDescription.length ? prev : prev + 1));
-    }, TYPEWRITER_MS_PER_CHAR);
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
-  }, [showAlt, altTitle.length, altDescription.length]);
-
-  useEffect(() => {
-    const done = titleLen >= altTitle.length && descLen >= altDescription.length;
-    if (done && intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  }, [titleLen, descLen, altTitle.length, altDescription.length]);
-
-  const titleDone = titleLen >= altTitle.length;
-  const descDone = descLen >= altDescription.length;
-
-  const altTitleVisible = altTitle.slice(0, titleLen);
-  const altDescVisible = altDescription.slice(0, descLen);
+  console.log("card data", data);
 
   return (
     <Card
@@ -68,26 +30,34 @@ export const ArticleCard = ({ data, className }: Props) => {
       onMouseLeave={() => setHovered(false)}
     >
       <Image data={data?.image} width={500} />
-      <TitleContent>
-        {showAlt ? (
-          <h4 className="article-card__title" aria-label={altTitle}>
-            {altTitleVisible}
-            {!titleDone && <span className="article-card__cursor" aria-hidden>|</span>}
-          </h4>
-        ) : (
+      <TitleBlock>
+        <TitleDefault $visible={!hasAlt || !showAlt}>
           <h4 className="article-card__title">{title}</h4>
+        </TitleDefault>
+        {hasAlt && (
+          <TitleAlt $visible={!!showAlt}>
+            <h4 className="article-card__title" aria-label={altTitle}>
+              {altTitle}
+            </h4>
+          </TitleAlt>
         )}
-      </TitleContent>
-      <DescContent>
-        {showAlt ? (
-          <p className="article-card__description" aria-label={altDescription}>
-            {altDescVisible}
-            {!descDone && <span className="article-card__cursor" aria-hidden>|</span>}
-          </p>
-        ) : (
+      </TitleBlock>
+      <DescBlock>
+        <DescDefault $visible={!hasAlt || !showAlt}>
           <p className="article-card__description">{description}</p>
+        </DescDefault>
+        {hasAlt && (
+          <DescAlt $visible={!!showAlt}>
+            <p className="article-card__description" aria-label={altDescription}>
+              {altDescription}
+            </p>
+          </DescAlt>
         )}
-      </DescContent>
+      </DescBlock>
+
+      <Link data={{ slug: data?.slug }} className="violet design">
+        Read more
+      </Link>
     </Card>
   );
 };
@@ -95,7 +65,6 @@ export const ArticleCard = ({ data, className }: Props) => {
 const CARD_TRANSITION = "0.35s ease";
 
 const Card = styled.article`
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 16rwd;
@@ -116,26 +85,9 @@ const Card = styled.article`
   .image {
     border-radius: 8rwd;
     width: 100%;
-    height: 200rwd;
+    height: 250rwd;
     object-fit: cover;
     transition: border-radius ${CARD_TRANSITION};
-  }
-
-  .article-card__cursor {
-    display: inline-block;
-    margin-left: 2px;
-    animation: article-card-cursor-blink 0.7s step-end infinite;
-  }
-
-  @keyframes article-card-cursor-blink {
-    0%,
-    50% {
-      opacity: 1;
-    }
-    51%,
-    100% {
-      opacity: 0;
-    }
   }
 
   @media --base-down {
@@ -144,28 +96,76 @@ const Card = styled.article`
     border-radius: 12rwm;
 
     .image {
-      height: 180rwm;
+      height: 200rwm;
       border-radius: 6rwm;
     }
   }
 `;
 
-const TitleContent = styled.div`
+const FADE_DURATION = "0.25s ease";
+
+/* Grid: both layers sit in the same cell so row height = max(default, alt) */
+const TitleBlock = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+`;
+
+const TitleDefault = styled.div<{ $visible: boolean }>`
+  grid-column: 1;
+  grid-row: 1;
+  opacity: ${(p) => (p.$visible ? 1 : 0)};
+  transition: opacity ${FADE_DURATION};
+  min-height: 0;
+
   .article-card__title {
     margin: 0;
     line-height: 1.2;
   }
 `;
 
+const TitleAlt = styled.div<{ $visible: boolean }>`
+  grid-column: 1;
+  grid-row: 1;
+  opacity: ${(p) => (p.$visible ? 1 : 0)};
+  pointer-events: ${(p) => (p.$visible ? "auto" : "none")};
+  transition: opacity ${FADE_DURATION};
+  min-height: 0;
 
-const DescContent = styled.div`
+  .article-card__title {
+    margin: 0;
+    line-height: 1.2;
+  }
+`;
+
+const DescBlock = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+`;
+
+const DescDefault = styled.div<{ $visible: boolean }>`
+  grid-column: 1;
+  grid-row: 1;
+  opacity: ${(p) => (p.$visible ? 1 : 0)};
+  transition: opacity ${FADE_DURATION};
+  min-height: 0;
+
   .article-card__description {
     margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  }
+`;
+
+const DescAlt = styled.div<{ $visible: boolean }>`
+  grid-column: 1;
+  grid-row: 1;
+  opacity: ${(p) => (p.$visible ? 1 : 0)};
+  pointer-events: ${(p) => (p.$visible ? "auto" : "none")};
+  transition: opacity ${FADE_DURATION};
+  min-height: 0;
+
+  .article-card__description {
+    margin: 0;
   }
 `;
 

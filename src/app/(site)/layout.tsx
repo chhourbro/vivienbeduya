@@ -4,7 +4,7 @@ import SmoothScroll from "@/components/organisms/smoothScroll";
 import { getLayoutRelatedData } from "@/queries/global";
 import { mergeClassNames } from "@flight-digital/flightdeck/helpers";
 import ThemeClasses from "@flight-digital/flightdeck/pebbles/themeClasses";
-import { Montserrat, Playfair_Display } from "next/font/google";
+import { Montserrat, Tilt_Warp } from "next/font/google";
 import "./style.linaria.global";
 import KlaviyoProvider from "@/components/organisms/klaviyoProvider";
 
@@ -13,7 +13,7 @@ export const montserrat = Montserrat({
   weight: ["400", "600"],
 });
 
-export const playfair_display = Playfair_Display({
+export const tilt_warp = Tilt_Warp({
   weight: ["400"],
 });
 
