@@ -47,7 +47,7 @@ export const Code = ({ data }: Props) => {
       {isTiktok && (
         <Script src={TIKTOK_EMBED_SCRIPT_URL} strategy="lazyOnload" />
       )}
-      <Wrapper dangerouslySetInnerHTML={{ __html: html }} />
+      <Wrapper data-lenis-prevent dangerouslySetInnerHTML={{ __html: html }} />
     </>
   );
 };

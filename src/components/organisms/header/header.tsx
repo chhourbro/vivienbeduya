@@ -67,8 +67,6 @@ export default Header;
 
 const Wrapper = styled.header`
   width: 100%;
-  --header-height: 72rwd;
-
   height: var(--header-height);
   min-height: var(--header-height);
   position: relative;

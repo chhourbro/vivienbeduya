@@ -1,6 +1,13 @@
 import { sanityFetch } from "@/lib/sanityClient";
 import { defineQuery } from "next-sanity";
-import { imageFields, linkFields, richTextFields, seoFields } from "./_general";
+import {
+  articlePreviewFields,
+  draftsFilter,
+  imageFields,
+  linkFields,
+  richTextFields,
+  seoFields,
+} from "./_general";
 
 interface GetNavigationResponse {
   header: Sanity.Maybe<Sanity.Header>;
@@ -80,6 +87,22 @@ const layoutRelatedDataQuery = defineQuery(`
     }
   }
 `);
+
+const nextReadPostQuery = defineQuery(`
+  *[_type == "article" && ${draftsFilter} && (!defined($articleId) || _id != $articleId)] | order(publishDate desc)[0] {
+    ${articlePreviewFields}
+  }
+`);
+
+export const getNextReadPost = async (articleId?: Sanity.Maybe<string>) => {
+  if (!articleId) return null;
+  const data = await sanityFetch({
+    query: nextReadPostQuery,
+    params: { articleId: articleId ?? null },
+    tags: ["next-read-post"],
+  });
+  return data as Sanity.Maybe<Sanity.Article>;
+};
 
 export const getSiteSettings = async () => {
   const data = await sanityFetch({

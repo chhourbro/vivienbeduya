@@ -1,90 +1,104 @@
-import Image from "@/components/atoms/image";
 import Blocks from "@/components/blocks/blocks";
+import PostTitle from "@/components/molecules/postTitle";
 import { styled } from "@linaria/react";
-import { format } from "date-fns";
+import { getNextReadPost } from "@/queries/global";
+import Link from "@/components/atoms/link";
+import Image from "@/components/atoms/image";
 
 interface Props {
   data: Sanity.Article;
   enablePreview?: boolean;
 }
-/**
- * THIS IS JUST AN EXAMPLE TEMPLATE, PLEASE DELETE THIS FILE IF YOU DON'T NEED IT OR MODIFY IT ACCORDINGLY
- */
-const ArticleTemplate = ({ data, enablePreview }: Props) => {
 
-  const publishDate = data?.publishDate ? format(new Date(data?.publishDate), "dd MMMM yyyy") : null;
+export default async function ArticleTemplate({ data, enablePreview }: Props) {
+  const nextRead = await getNextReadPost(data?._id);
+
+  const NextRead = () => (
+    <Link data={nextRead} alwaysReturnLink className="next-read">
+      <p className="small">Sunod nga basahonon</p>
+      <div className="content">
+        <Image data={nextRead?.image} width={130} />
+        <p className="h6">{nextRead?.title}</p>
+      </div>
+    </Link>
+  )
+
   return (
     <Wrapper>
-      <div className="article-title-area">
-        <h1 className="title">{data?.title}</h1>
-        <div className="article-details">
-          <div className="article-date">
-            Published on: {publishDate}
-          </div>
-          <div className="article-tags">
-            {data?.tags?.map((tag) => (
-              <span key={tag?._key} className="article-tag">{tag?.name}</span>
-            ))}
-          </div>
-        </div>
-        {data.image?.desktopImage?.asset ? (
-          <div className="image-area">
-            <Image data={data?.image} width={1200} loading="eager" />
-          </div>
-        ) : null}
-      </div>
+      <PostTitle data={data}>
+        <NextRead />
+      </PostTitle>
       <div className="article-content-area">
         <Blocks data={data?.blocks} enablePreview={enablePreview} />
+      </div>
+      <div className="next-read-mobile">
+        <NextRead />
       </div>
     </Wrapper>
   );
 };
 
-export default ArticleTemplate;
 
 const Wrapper = styled.div`
-  .article-title-area {
-    padding: 32rwd 128rwd;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rwd;
+  .article-content-area {
+    padding-top: 64rwd;
+  }
+
+  .next-read-mobile {
+    display: none;
+  }
+
+  @media --base-down {
     display: flex;
     flex-direction: column;
-    gap: 32rwd;
-    text-align: center;
+    .next-read-mobile {
+      display: flex;
+      margin: 0 16rwm;
+      .next-read {
+        color: var(--color-white);
+        display: flex;
+        flex-direction: column;
+        gap: 8rwm;
+        .content {
+          display: flex;
+          flex-direction: row;
+          gap: 8rwm;
+          img {
+            width: 160rwm;
+          }
+        }
 
-    @media --base-down {
-      padding: 32rwm var(--theme-page-horizontal-padding);
-      gap: 16rwm;
-    }
-
-    .title {
-      max-width: 80%;
-      margin: 0 auto;
-      text-align: center;
-
-      @media --base-down {
-        max-width: 100%;
       }
     }
 
-    .image-area {
-      width: 100%;
-
-      @media --base-down {
-        height: 200rwm;
-      }
-
-      .image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+    .article-content-area {
+      z-index: 1;
+      padding: 16rwm 0;
+    }
+    .block {
+      padding: 8rwm;
+      margin: 0 8rwm;
+      background-color: var(--color-white);
     }
   }
 
-  .article-content-area {
-    padding: 32rwd 128rwd;
+  .post-content {
+    --theme-page-horizontal-padding: 0;
+    padding: 20rwd 0;
 
-    p {
-      margin: 8rwd 0;
+    @media --base-down {
+      padding: 0;
+    }
+
+    .block {
+      scroll-margin-top: 120rwd;
+
+      @media --base-down {
+        scroll-margin-top: 100rwm;
+      }
     }
   }
 `;

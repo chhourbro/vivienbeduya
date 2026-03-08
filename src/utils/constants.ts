@@ -1,4 +1,4 @@
-export const siteName = "Vivien Beduya";
+export const siteName = "Bisaya Banter";
 
 export const mobileBreakpoint = 768;
 

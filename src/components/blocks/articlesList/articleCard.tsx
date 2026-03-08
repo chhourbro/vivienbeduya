@@ -18,10 +18,8 @@ export const ArticleCard = ({ data, className }: Props) => {
   const description = data?.description ?? "";
   const altTitle = data?.alternativeTitle?.trim() ?? "";
   const altDescription = data?.alternativeDescription?.trim() ?? "";
-  const showAlt = hovered && (altTitle || altDescription);
   const hasAlt = !!(altTitle || altDescription);
-
-  console.log("card data", data);
+  const showAlt = hovered && hasAlt;
 
   return (
     <Card
@@ -30,30 +28,30 @@ export const ArticleCard = ({ data, className }: Props) => {
       onMouseLeave={() => setHovered(false)}
     >
       <Image data={data?.image} width={500} />
-      <TitleBlock>
-        <TitleDefault $visible={!hasAlt || !showAlt}>
+      <ContentBlock>
+        <FadeLayer $visible={!hasAlt || !showAlt} $isAlt={false}>
           <h4 className="article-card__title">{title}</h4>
-        </TitleDefault>
+        </FadeLayer>
         {hasAlt && (
-          <TitleAlt $visible={!!showAlt}>
+          <FadeLayer $visible={showAlt} $isAlt>
             <h4 className="article-card__title" aria-label={altTitle}>
               {altTitle}
             </h4>
-          </TitleAlt>
+          </FadeLayer>
         )}
-      </TitleBlock>
-      <DescBlock>
-        <DescDefault $visible={!hasAlt || !showAlt}>
+      </ContentBlock>
+      <ContentBlock>
+        <FadeLayer $visible={!hasAlt || !showAlt} $isAlt={false}>
           <p className="article-card__description">{description}</p>
-        </DescDefault>
+        </FadeLayer>
         {hasAlt && (
-          <DescAlt $visible={!!showAlt}>
+          <FadeLayer $visible={showAlt} $isAlt>
             <p className="article-card__description" aria-label={altDescription}>
               {altDescription}
             </p>
-          </DescAlt>
+          </FadeLayer>
         )}
-      </DescBlock>
+      </ContentBlock>
 
       <Link data={{ slug: data?.slug }} className="violet design">
         Read more
@@ -68,8 +66,6 @@ const Card = styled.article`
   display: flex;
   flex-direction: column;
   gap: 16rwd;
-  border: 1px solid var(--color-grey, #9fa6a2);
-  border-radius: 16rwd;
   padding: 16rwd;
   transition:
     border-color ${CARD_TRANSITION},
@@ -78,26 +74,37 @@ const Card = styled.article`
 
   &:hover {
     border-color: var(--color-black);
-    box-shadow: 0 4rwd 20rwd rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4rwd 20rwd rgba(0, 0, 0, 0.2);
     transform: translateY(-2rwd);
   }
 
   .image {
-    border-radius: 8rwd;
     width: 100%;
     height: 250rwd;
     object-fit: cover;
-    transition: border-radius ${CARD_TRANSITION};
+  }
+
+  .article-card__title {
+    margin: 0;
+    display: inline;
+    color: var(--color-white);
+    background: var(--color-violet);
+    line-height: 1.4;
+    padding: 0 8rwd;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .article-card__description {
+    margin: 0;
   }
 
   @media --base-down {
     gap: 12rwm;
     padding: 12rwm;
-    border-radius: 12rwm;
 
     .image {
       height: 200rwm;
-      border-radius: 6rwm;
     }
   }
 `;
@@ -105,67 +112,19 @@ const Card = styled.article`
 const FADE_DURATION = "0.25s ease";
 
 /* Grid: both layers sit in the same cell so row height = max(default, alt) */
-const TitleBlock = styled.div`
+const ContentBlock = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
 `;
 
-const TitleDefault = styled.div<{ $visible: boolean }>`
+const FadeLayer = styled.div<{ $visible: boolean; $isAlt?: boolean }>`
   grid-column: 1;
   grid-row: 1;
   opacity: ${(p) => (p.$visible ? 1 : 0)};
+  pointer-events: ${(p) =>
+    p.$isAlt ? (p.$visible ? "auto" : "none") : "auto"};
   transition: opacity ${FADE_DURATION};
   min-height: 0;
-
-  .article-card__title {
-    margin: 0;
-    line-height: 1.2;
-  }
-`;
-
-const TitleAlt = styled.div<{ $visible: boolean }>`
-  grid-column: 1;
-  grid-row: 1;
-  opacity: ${(p) => (p.$visible ? 1 : 0)};
-  pointer-events: ${(p) => (p.$visible ? "auto" : "none")};
-  transition: opacity ${FADE_DURATION};
-  min-height: 0;
-
-  .article-card__title {
-    margin: 0;
-    line-height: 1.2;
-  }
-`;
-
-const DescBlock = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-`;
-
-const DescDefault = styled.div<{ $visible: boolean }>`
-  grid-column: 1;
-  grid-row: 1;
-  opacity: ${(p) => (p.$visible ? 1 : 0)};
-  transition: opacity ${FADE_DURATION};
-  min-height: 0;
-
-  .article-card__description {
-    margin: 0;
-  }
-`;
-
-const DescAlt = styled.div<{ $visible: boolean }>`
-  grid-column: 1;
-  grid-row: 1;
-  opacity: ${(p) => (p.$visible ? 1 : 0)};
-  pointer-events: ${(p) => (p.$visible ? "auto" : "none")};
-  transition: opacity ${FADE_DURATION};
-  min-height: 0;
-
-  .article-card__description {
-    margin: 0;
-  }
 `;
 

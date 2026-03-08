@@ -12,8 +12,10 @@ export const globals = css`
       --color-black: #2E2A2B;
       --color-white: #ffffff;
       --color-blue: #0000ff;
-      --color-yellow: #f7cb4d;
       --color-violet: #3d348b;
+      --color-mango: #f2c744;
+
+      --header-height: 72rwd;
 
       --font-primary: "Montserrat", Arial, system-ui, "Open Sans", sans-serif;
       --font-secondary: "Tilt Warp", Arial, system-ui, "Open Sans", sans-serif;
@@ -282,7 +284,6 @@ export const globals = css`
           background: transparent;
           height: 40rwd;
           min-height: 40rwd;
-          border-radius: 8rwd;
           color: var(--color-white);
           font-family: var(--font-primary);
 
