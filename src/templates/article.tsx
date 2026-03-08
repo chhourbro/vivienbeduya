@@ -81,7 +81,7 @@ const Wrapper = styled.div`
     width: 75%;
     cursor: pointer;
     img {
-      max-width: 150rwd;
+      max-width: 170rwd;
       height: 100rwd;
     }
     h4 {
