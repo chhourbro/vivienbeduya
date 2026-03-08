@@ -21,8 +21,7 @@ const Header = ({ data }: Props) => {
   const pathname = usePathname();
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
-  const headerVisible =
-    sideMenuOpen || !Boolean(data?.hideOnScroll) || !scrolled || direction === "up";
+  const headerVisible = sideMenuOpen || !Boolean(data?.hideOnScroll) || !scrolled || direction === "up";
 
   const handleChangeSideMenuVisibility = (value: boolean) => {
     setSideMenuOpen(value);
@@ -43,6 +42,7 @@ const Header = ({ data }: Props) => {
       <div className="header-bar">
         <Link data={{ url: "/" }} aria-label="Go to Homepage" className="logo-area">
           <Image data={data.logo} loading="eager" width={230} className="logo" alt="Logo" />
+          <pre className="h6">bisaya banter</pre>
         </Link>
         <Nav data={data.navigation} sideMenuOpen={sideMenuOpen} />
         <div className="mobile-menu">
@@ -93,14 +93,15 @@ const Wrapper = styled.header`
     transition:
       transform 300ms cubic-bezier(0.77, 0.2, 0.5, 1),
       background-color 300ms cubic-bezier(0.77, 0.2, 0.5, 1);
-    display: flex; 
+    display: flex;
+    justify-content: space-between;
     gap: 32rwd;
     padding: 16rwd var(--theme-page-horizontal-padding);
-    color: var(--color-black);
-    background-color: var(--color-white);
+    color: var(--color-white);
+    background-color: var(--color-violet);
 
     a {
-      font-size: 20rwd;
+      font-size: 16rwd;
     }
 
     @media --base-down {
@@ -113,7 +114,15 @@ const Wrapper = styled.header`
   }
 
   .logo-area {
-    height: 39rwd;
+    /* height: 60rwd;
+    width: 150rwd; */
+    display: flex;
+    gap: 8rwd;
+    align-items: center;
+
+    pre {
+      font-family: var(--font-secondary);
+    }
 
     @media --base-down {
       width: 150rwm;

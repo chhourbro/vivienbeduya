@@ -9,16 +9,18 @@ export const globals = css`
     }
 
     body {
-      --color-black: #2E2A2B;
-      --color-white: #ffffff;
+      --color-black: #1b1b2f;
+      --color-white: #f5f0e8;
       --color-blue: #0000ff;
       --color-violet: #3d348b;
       --color-mango: #f2c744;
+      --color-red: #e8503a;
 
       --header-height: 72rwd;
 
-      --font-primary: "Montserrat", Arial, system-ui, "Open Sans", sans-serif;
+      --font-primary: "Outfit", Arial, system-ui, "Open Sans", sans-serif;
       --font-secondary: "Tilt Warp", Arial, system-ui, "Open Sans", sans-serif;
+      --font-weight-light: 300;
       --font-weight-regular: 400;
       --font-weight-bold: 600;
 
@@ -29,7 +31,7 @@ export const globals = css`
 
       font-family: var(--font-primary);
       font-size: 17rwd;
-      font-weight: var(--font-weight-regular);
+      font-weight: var(--font-weight-light);
       background-color: var(--color-white);
       color: var(--color-black);
       line-height: 1.5;

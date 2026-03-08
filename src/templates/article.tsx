@@ -43,6 +43,33 @@ const Wrapper = styled.div`
   gap: 20rwd;
   .article-content-area {
     padding-top: 64rwd;
+
+    p:first-of-type::first-letter {
+      float: left;
+      font-family: var(--font-secondary);
+      font-size: 55rwd;
+      line-height: 0.85;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-violet);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      transition: all 0.3s ease;
+
+      background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--color-violet) 12%, transparent) 0%,
+        color-mix(in srgb, var(--color-mango) 8%, transparent) 100%
+      );
+      border-left: 3rwd solid var(--color-mango);
+      border-radius: 4rwd 0 0 4rwd;
+      padding: 8rwd 10rwd 8rwd 12rwd;
+      margin: 0 12rwd 0 0;
+      box-shadow: 0 8rwd 8rwd color-mix(in srgb, var(--color-violet) 0.15, transparent);
+
+      &:hover {
+        margin: 0;
+      }
+    }
   }
 
   .next-read-mobile {
@@ -51,6 +78,7 @@ const Wrapper = styled.div`
 
   .next-read-desktop {
     width: 75%;
+    cursor: pointer;
     img {
       max-width: 150rwd;
       height: 100rwd;

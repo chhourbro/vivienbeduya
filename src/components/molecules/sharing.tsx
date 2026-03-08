@@ -55,6 +55,7 @@ export const Sharing = ({
 
   return (
     <Wrapper className={mergeClassNames("sharing", className)} role="group" aria-label="Share">
+      Share:
       {platforms.map((platform) => (
         <ShareButton
           key={platform}

@@ -4,13 +4,13 @@ import SmoothScroll from "@/components/organisms/smoothScroll";
 import { getLayoutRelatedData } from "@/queries/global";
 import { mergeClassNames } from "@flight-digital/flightdeck/helpers";
 import ThemeClasses from "@flight-digital/flightdeck/pebbles/themeClasses";
-import { Montserrat, Tilt_Warp } from "next/font/google";
+import { Outfit, Tilt_Warp } from "next/font/google";
 import "./style.linaria.global";
 import KlaviyoProvider from "@/components/organisms/klaviyoProvider";
 
 // Replace with your fonts, also update the font-family in the style.linaria.global.tsx file
-export const montserrat = Montserrat({
-  weight: ["400", "600"],
+export const outfit = Outfit({
+  weight: ["300", "400", "600", "700"],
 });
 
 export const tilt_warp = Tilt_Warp({
@@ -21,7 +21,7 @@ export default async function Layout({ children }: LayoutProps<"/">) {
   const navigation = await getLayoutRelatedData();
 
   return (
-    <div className={mergeClassNames("global-layout", montserrat.className)}>
+    <div className={mergeClassNames("global-layout", outfit.className)}>
       <ThemeClasses data={navigation?.theme?.classNames as any} />
       <SmoothScroll />
       <Header data={navigation.header} />

@@ -13,12 +13,13 @@ import {
 import { blocksFields } from "./blocks";
 
 // Create different queries for different page types here
+// Do not use "..." in the article branch: it would overwrite slug with the raw document slug (prefix stays reference).
+// Only add article-specific fields so slug keeps the expanded prefix from pagePreviewFields.
 export const pageFields = defineQuery(`
   ${pagePreviewFields},
   seo { ${seoFields} },
   blocks { ${blocksFields} },
   _type == "article" => {
-    ...,
     publishDate,
     tags[]->{ name },
     image { ${imageFields} }

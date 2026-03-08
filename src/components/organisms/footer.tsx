@@ -38,7 +38,7 @@ const Footer = ({ data, socialMedias }: Props) => {
                   rel="noopener noreferrer"
                   className="social-media-link"
                 >
-                  <SanityIcon data={socialMedia?.icon} color="var(--color-blue)" />
+                  <SanityIcon data={socialMedia?.icon} />
                 </a>
               </li>
             ))}
@@ -69,6 +69,26 @@ const Wrapper = styled.footer`
   display: flex;
   flex-direction: column;
   gap: 24rwd;
+  color: var(--color-white);
+  overflow: hidden;
+
+	background: linear-gradient(-45deg, #ef9283, #3d348b, #8e84e8);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 
   @media --base-down {
     padding: 32rwm var(--theme-page-horizontal-padding);
@@ -88,13 +108,18 @@ const Wrapper = styled.footer`
       display: flex;
       flex: 1;
       flex-direction: column;
+      /* mix-blend-mode: difference; */
+
+      svg {
+        fill: currentColor;
+      }
 
       .title {
         font-size: 14rwd;
         margin-bottom: 32rwd;
         text-transform: uppercase;
         font-weight: var(--font-weight-bold);
-        color: var(--color-blue);
+        color: var(--color-white);
 
         @media --base-down {
           font-size: 14rwm;
